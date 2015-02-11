@@ -9,6 +9,7 @@ m = length(y); % number of training examples
 
 % You need to return the following variables correctly 
 J = 0;
+
 grad = zeros(size(theta));
 
 % ====================== YOUR CODE HERE ======================
@@ -19,13 +20,17 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
+f0=@(val) 1/(1+e^(-val));
 
+f1=@(val) log(f0(-val));
 
+f2=@(val) log(1-f0(-val));
 
+temp = X*theta;
 
+J = (-y'*arrayfun(f1, temp) -(1-y)'*arrayfun(f2, temp))/m;
 
-
-
+grad = (X'* (arrayfun(f0, temp) - y))/m;
 
 % =============================================================
 
