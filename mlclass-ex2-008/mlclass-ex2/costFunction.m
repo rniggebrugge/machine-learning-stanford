@@ -20,17 +20,17 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
-f0=@(val) 1/(1+e^(-val));
+g=@(z) 1/(1+e^(-z));
 
-f1=@(val) log(f0(-val));
+f1=@(val) log(g(val));
 
-f2=@(val) log(1-f0(-val));
+f2=@(val) log(1-g(val));
 
 temp = X*theta;
 
 J = (-y'*arrayfun(f1, temp) -(1-y)'*arrayfun(f2, temp))/m;
 
-grad = (X'* (arrayfun(f0, temp) - y))/m;
+grad = (X'* (arrayfun(g, temp) - y))/m;
 
 % =============================================================
 
