@@ -107,7 +107,7 @@ J = J + lambda/(2*m)*(sum(temp1)+sum(temp2));
 %%% PART 2
 
 for i=1:m;
-	a1 = X(m,:)';
+	a1 = X(i,:)';
 	a1=[1; a1];
 	z2=Theta1*a1;
 	a2=sigmoid(z2);
@@ -126,6 +126,14 @@ endfor;
 
 Theta1_grad = Theta1_grad / m;
 Theta2_grad = Theta2_grad / m;
+
+Added1 = Theta1 * lambda/m;
+Added1(:,1) = 0;
+Added2 = Theta2 * lambda/m;
+Added2(:,1) = 0;
+
+Theta1_grad = Theta1_grad + Added1;
+Theta2_grad = Theta2_grad + Added2;
 
 % =========================================================================
 
