@@ -24,6 +24,9 @@ grad = zeros(size(theta));
 
 
 
+temp = X*theta - y;
+
+J = 1/(2*m) * ( temp' * temp + lambda * (theta' * theta - theta(1)*theta(1))) ;
 
 
 
