@@ -38,7 +38,9 @@ grad = zeros(size(theta));
 
 
 
+g=@(z) 1/(1+e^(-z));
 
+f1=@(val) log(g(val));
 g=@(z) 1/(1+e^(-z));
 
 f1=@(val) log(g(val));
@@ -54,6 +56,15 @@ additional_term(1) = 0;
 grad = (X'* (arrayfun(g, temp) - y))/m + additional_term;
 
 
+f2=@(val) log(1-g(val));
+
+temp = X*theta;
+
+J = (-y'*arrayfun(f1, temp) -(1-y)'*arrayfun(f2, temp))/m + lambda/(2*m)*(theta'*theta-theta(1)^2);
+
+additional_term = lambda/m * theta;
+additional_term(1) = 0;
+grad = (X'* (arrayfun(g, temp) - y))/m + additional_term;
 
 
 

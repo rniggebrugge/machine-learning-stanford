@@ -38,7 +38,7 @@ m = size(X, 1);
 
 % Randomly select 100 data points to display
 sel = randperm(size(X, 1));
-sel = sel(1:100);
+sel = sel(1:3);
 
 displayData(X(sel, :));
 
@@ -71,6 +71,8 @@ pause;
 %  through the examples one at the a time to see what it is predicting.
 
 %  Randomly permute examples
+
+m = 7;
 rp = randperm(m);
 
 for i = 1:m
