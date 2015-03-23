@@ -123,7 +123,7 @@ fprintf('Loading and Visualizing Data ...\n')
 load('ex6data3.mat');
 
 % Plot training data
-plotData(X, y);
+plotData(Xval, yval);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;

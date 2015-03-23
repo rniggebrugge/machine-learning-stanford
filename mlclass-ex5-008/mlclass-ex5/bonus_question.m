@@ -1,7 +1,7 @@
 function [size_vec, error_train, error_val] = ...
     bonus_question(X, y, Xval, yval, lambda)
 
-size_vec = 1:12;
+size_vec = 2:12;
 iterations = 50;
 
 n_train = size(X,1);
