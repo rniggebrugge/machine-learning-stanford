@@ -41,9 +41,15 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+pred = (X*Theta' - Y).*R;
+cost = pred.*pred;
 
+added_cost_regularization = (sum(sum(Theta.*Theta)) + sum(sum(X.*X))) * lambda/2;
 
+J = sum(sum(cost))/2 + added_cost_regularization;
 
+X_grad = pred*Theta + lambda*X;
+Theta_grad = pred'*X + lambda*Theta;
 
 
 
