@@ -1,19 +1,23 @@
 function [Theta1 Theta2 Xmax self_accuracy accuracy] = kaggle_run(m, hidden_layer_size, lambda)
 
 	if ~exist('lambda', 'var') || isempty(lambda)
-	    lambda = 0;
+	    lambda = 0.05;
 	end
 
 	if ~exist('hidden_layer_size', 'var') || isempty(hidden_layer_size)
-	    hidden_layer_size = 25;
+	    hidden_layer_size = 44;
 	end
 
 	[trainDS testDS] = take_random_parts(m, m);
 	[X Y] = add_features(trainDS);
 	[X Xmax]= normalize(X);
 
+
 	[Xtest Ytest] = add_features(testDS);
 	Xtest = Xtest./Xmax;
+
+	size(Xtest)
+	size(X)
 
 	input_layer_size = size(X,2); 
 	num_labels = 9; 

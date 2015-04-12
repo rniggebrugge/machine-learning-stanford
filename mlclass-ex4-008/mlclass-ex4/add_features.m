@@ -37,12 +37,12 @@ function [Xreturn Y] = add_features(X)
 	% 	end
 	% end
 
-	for i=1:9
-		for j=(i+1):10
-			X = [X X(:,ix(i)).*X(:,ix(j))];
-			X = [X X(:,ix(i))./(1+X(:,ix(j)))];
-		end
-	end
+	% for i=1:9
+	% 	for j=(i+1):10
+	% 		X = [X X(:,ix(i)).*X(:,ix(j))];
+	% 		X = [X X(:,ix(i))./(1+X(:,ix(j)))];
+	% 	end
+	% end
 
 	%% power3-products
 
@@ -59,23 +59,23 @@ function [Xreturn Y] = add_features(X)
 	% 	end
 	% end
 
-	for i=1:10
-		for j=i:10
-			for k=j:10	
-				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
-			end
-		end
-	end
+	% for i=1:10
+	% 	for j=i:10
+	% 		for k=j:10	
+	% 			X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
+	% 		end
+	% 	end
+	% end
 
-	for i=1:4
-		for j=i:4
-			for k=j:4
-				for l=k:4	
-					X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k)).*X(:,ix(l))];
-			end
-		end
-	end
+	% for i=1:4
+	% 	for j=i:4
+	% 		for k=j:4
+	% 			for l=k:4	
+	% 				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k)).*X(:,ix(l))];
+	% 		end
+	% 	end
+	% end
 
-	Xreturn = [X X2];
+	Xreturn = X; %[X X2];
 
 end
