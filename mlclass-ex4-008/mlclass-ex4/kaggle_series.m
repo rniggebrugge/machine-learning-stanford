@@ -1,7 +1,7 @@
 function kaggle_series(m)
 
 
-	lambda_vector = [0];
+	lambda_vector = [0.05];
 	hl_vector = 9:60;
 
 	j_max = 0;
