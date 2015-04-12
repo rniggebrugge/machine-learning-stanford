@@ -1,17 +1,26 @@
-function kaggle_series(m)
+function kaggle_series(m, lambda_vector, hl_vector)
 
 
-	lambda_vector = [0.05];
-	hl_vector = 9:60;
+	if ~exist('lambda_vector', 'var') || isempty(lambda_vector)
+		lambda_vector = [0; 0.01; 0.05; .1; .15; .2 ];
+	end
+
+	if ~exist('hl_vector', 'var') || isempty(hl_vector)
+		hl_vector = 9:60;
+	end
+
 
 	j_max = 0;
 
-	[trainDS testDS] = take_random_parts("train.csv", m, m);
+	[trainDS testDS] = take_random_parts(m, m);
 	[X Y] = add_features(trainDS);
-	X = normalize(X);
+	[X Xmax] = normalize(X);
 
 	[Xtest Ytest] = add_features(testDS);
-	Xtest = normalize(Xtest);
+	Xtest = Xtest./Xmax;
+
+	size(X)
+	size(Xtest)
 
 	input_layer_size = size(X,2); 
 	num_labels = 9; 
@@ -24,7 +33,7 @@ function kaggle_series(m)
 		initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 		initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 		initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
-		options = optimset('MaxIter', 800);
+		options = optimset('MaxIter', 400);
 
 		for i=1:length(lambda_vector)
 			lambda = lambda_vector(i);

@@ -10,10 +10,10 @@ function [Theta1 Theta2 self_accuracy accuracy] = kaggle_run(m, hidden_layer_siz
 
 	[trainDS testDS] = take_random_parts("train.csv", m, m);
 	[X Y] = add_features(trainDS);
-	X = normalize(X);
+	[X Xmax]= normalize(X);
 
 	[Xtest Ytest] = add_features(testDS);
-	Xtest = normalize(Xtest);
+	Xtest = Xtest./Xmax;
 
 	input_layer_size = size(X,2); 
 	num_labels = 9; 
