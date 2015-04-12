@@ -1,4 +1,4 @@
-function [Theta1 Theta2 self_accuracy accuracy] = kaggle_run(m, hidden_layer_size, lambda)
+function [Theta1 Theta2 Xmax self_accuracy accuracy] = kaggle_run(m, hidden_layer_size, lambda)
 
 	if ~exist('lambda', 'var') || isempty(lambda)
 	    lambda = 0;
@@ -8,7 +8,7 @@ function [Theta1 Theta2 self_accuracy accuracy] = kaggle_run(m, hidden_layer_siz
 	    hidden_layer_size = 25;
 	end
 
-	[trainDS testDS] = take_random_parts("train.csv", m, m);
+	[trainDS testDS] = take_random_parts(m, m);
 	[X Y] = add_features(trainDS);
 	[X Xmax]= normalize(X);
 
