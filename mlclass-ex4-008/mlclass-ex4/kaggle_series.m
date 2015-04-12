@@ -1,8 +1,8 @@
 function kaggle_series(m)
 
 
-	lambda_vector = 0:0.01:.5;
-	hl_vector = [20 25 27 30 34 36 40 45 60 70 80 90];
+	lambda_vector = [0];
+	hl_vector = 9:60;
 
 	j_max = 0;
 
@@ -57,13 +57,13 @@ function kaggle_series(m)
 
 
 			fprintf(['Lambda: %f '...
-	         '\n'], lambda);
+	         ''], lambda);
 			fprintf(['Hidden layer: %f '...
-	         '\n'], hidden_layer_size);
+	         ''], hidden_layer_size);
 			fprintf(['J_train: %f '...
-	         '\n'], self_accuracy);
+	         ''], self_accuracy);
 			fprintf(['J_test: %f '...
-	         '\n'], accuracy);
+	         ''], accuracy);
 			fprintf('\n');
 		end
 
