@@ -24,7 +24,7 @@ function kaggle_series(m)
 		initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 		initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 		initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
-		options = optimset('MaxIter', 400);
+		options = optimset('MaxIter', 800);
 
 		for i=1:length(lambda_vector)
 			lambda = lambda_vector(i);
