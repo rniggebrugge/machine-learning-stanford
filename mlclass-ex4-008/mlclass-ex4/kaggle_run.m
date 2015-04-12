@@ -23,7 +23,7 @@ function [Theta1 Theta2 self_accuracy accuracy] = kaggle_run(m, hidden_layer_siz
 
 	initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
-	options = optimset('MaxIter', 40);
+	options = optimset('MaxIter', 400);
 	
 	costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
