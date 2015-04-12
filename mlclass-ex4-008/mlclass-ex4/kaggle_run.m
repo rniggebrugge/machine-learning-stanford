@@ -1,4 +1,4 @@
-function [Theta1 Theta2] = kaggle_run(m, hidden_layer_size, lambda)
+function [Theta1 Theta2 self_accuracy accuracy] = kaggle_run(m, hidden_layer_size, lambda)
 
 	if ~exist('lambda', 'var') || isempty(lambda)
 	    lambda = 0;
@@ -23,7 +23,7 @@ function [Theta1 Theta2] = kaggle_run(m, hidden_layer_size, lambda)
 
 	initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
-	options = optimset('MaxIter', 100);
+	options = optimset('MaxIter', 40);
 	
 	costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -43,17 +43,15 @@ function [Theta1 Theta2] = kaggle_run(m, hidden_layer_size, lambda)
 
 	self_accuracy = mean(pred_self==Y);
 
-	fprintf(['\nAccuracy in training set:  %f ' ...
-			'\n\n'], self_accuracy);
+	% fprintf(['\nAccuracy in training set:  %f ' ...
+	% 		'\n\n'], self_accuracy);
 
 	pred = predict(Theta1, Theta2, Xtest);
 
 	accuracy = mean(pred==Ytest);
 
-	fprintf(['\nAccuracy on test set:  %f ' ...
-			'\n\n'], accuracy);
+	% fprintf(['\nAccuracy on test set:  %f ' ...
+	% 		'\n\n'], accuracy);
 
 
 end
-
-
