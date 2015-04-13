@@ -1,11 +1,11 @@
 function [Theta1 Theta2 Xmax self_accuracy accuracy] = kaggle_run(m, hidden_layer_size, lambda)
 
 	if ~exist('lambda', 'var') || isempty(lambda)
-	    lambda = 0.05;
+	    lambda = 0.0;
 	end
 
 	if ~exist('hidden_layer_size', 'var') || isempty(hidden_layer_size)
-	    hidden_layer_size = 44;
+	    hidden_layer_size = 25;
 	end
 
 	[trainDS testDS] = take_random_parts(m, m);
@@ -27,7 +27,7 @@ function [Theta1 Theta2 Xmax self_accuracy accuracy] = kaggle_run(m, hidden_laye
 
 	initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 
-	options = optimset('MaxIter', 400);
+	options = optimset('MaxIter', 200);
 	
 	costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...

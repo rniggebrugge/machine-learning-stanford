@@ -1,4 +1,4 @@
-function kaggle_series(iterations, m, lambda_vector, hl_vector)
+function [theta1_return theta2_return Xmax] = kaggle_series(iterations, m, lambda_vector, hl_vector)
 
 
 	if ~exist('lambda_vector', 'var') || isempty(lambda_vector)
@@ -61,6 +61,8 @@ function kaggle_series(iterations, m, lambda_vector, hl_vector)
 				j_max = accuracy;
 				lambda_optimal = lambda;
 				hl_optimal = hidden_layer_size;
+				theta1_return = Theta1;
+				theta2_return = Theta2;
 			end
 
 
