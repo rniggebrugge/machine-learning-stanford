@@ -1,4 +1,4 @@
-function [theta1_return theta2_return Xmax] = kaggle_series(iterations, m, lambda_vector, hl_vector)
+function [theta1_return theta2_return Xmax Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector)
 
 
 	if ~exist('lambda_vector', 'var') || isempty(lambda_vector)
@@ -14,10 +14,14 @@ function [theta1_return theta2_return Xmax] = kaggle_series(iterations, m, lambd
 
 	[trainDS testDS] = take_random_parts(m, m);
 	[X Y] = add_features(trainDS);
-	[X Xmax] = normalize(X);
+	
+	Xmean = mean(X,1);
+	Xrange = range(X);
+	X = (X.-Xmean)./Xrange;
+
 
 	[Xtest Ytest] = add_features(testDS);
-	Xtest = Xtest./Xmax;
+	Xtest = (Xtest.-Xmean)./Xrange;
 
 	size(X)
 	size(Xtest)

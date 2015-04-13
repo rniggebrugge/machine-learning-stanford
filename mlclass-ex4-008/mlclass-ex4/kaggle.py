@@ -30,7 +30,7 @@ lbl_enc = preprocessing.LabelEncoder()
 labels = lbl_enc.fit_transform(labels)
 
 # train a random forest classifier
-clf = ensemble.RandomForestClassifier(n_jobs=-1, n_estimators=100)
+clf = ensemble.RandomForestClassifier(n_jobs=-1, n_estimators=250)
 clf.fit(train, labels)
 
 # predict on test set
@@ -38,4 +38,4 @@ preds = clf.predict_proba(test)
 
 # create submission file
 preds = pd.DataFrame(preds, index=sample.id.values, columns=sample.columns[1:])
-preds.to_csv('benchmark.csv', index_label='id')
+preds.to_csv('benchmark-test.csv', index_label='id')

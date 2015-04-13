@@ -59,13 +59,13 @@ function [Xreturn Y] = add_features(X)
 	% 	end
 	% end
 
-	% for i=1:10
-	% 	for j=i:10
-	% 		for k=j:10	
-	% 			X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
-	% 		end
-	% 	end
-	% end
+	for i=1:10
+		for j=i:10
+			for k=j:10	
+				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
+			end
+		end
+	end
 
 	% for i=1:4
 	% 	for j=i:4
@@ -76,6 +76,6 @@ function [Xreturn Y] = add_features(X)
 	% 	end
 	% end
 
-	Xreturn = X; %[X X2];
+	Xreturn = [X X2];
 
 end
