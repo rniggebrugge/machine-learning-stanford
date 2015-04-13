@@ -30,7 +30,7 @@ lbl_enc = preprocessing.LabelEncoder()
 labels = lbl_enc.fit_transform(labels)
 
 # train a random forest classifier
-clf = ensemble.RandomForestClassifier(n_jobs=-1, n_estimators=250)
+clf = ensemble.RandomForestClassifier(n_jobs=-1, n_estimators=100, max_features=None)
 clf.fit(train, labels)
 
 # predict on test set
