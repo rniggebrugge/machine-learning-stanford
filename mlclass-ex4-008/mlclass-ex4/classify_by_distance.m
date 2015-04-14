@@ -1,5 +1,6 @@
 function [prediction cl] = classify_by_distance(train, Ytrain, test, Ytest)
 
+	mtrain = size(train,1);
 	m = size(test,1);
 	prediction = zeros(m,9);
 
@@ -15,11 +16,12 @@ function [prediction cl] = classify_by_distance(train, Ytrain, test, Ytest)
 		dt = train.-vector;
 		dt = dt.^2;
 		dt = sum(dt,2);
-		max_distance = min(dt)*1.6;
+		% max_distance = min(dt)*1.6;
 		[distances idx] = sort(dt);
 		j=1;
-		while(distances(j)<max_distance)
-			prediction(i,Ytrain(idx(j))) += 1 ; %+ distances(1)/distances(j) ; 
+		while(j<100)
+			prediction(i,Ytrain(idx(j))) += 1/j ; %+ distances(1)/distances(j) ; 
+			prediction(i,Ytrain(idx(mtrain-j+1))) -= 1/j;
 			j++;
 		end
 	end
@@ -28,9 +30,9 @@ function [prediction cl] = classify_by_distance(train, Ytrain, test, Ytest)
 
 	[dummy cl] = max(prediction, [], 2);
 
-	% accuracy = mean(cl==Ytest);
+	accuracy = mean(cl==Ytest);
 
-	% fprintf(['This got an accuracy of %f' ...
-	% 	'\n'], accuracy );
+	fprintf(['This got an accuracy of %f' ...
+		'\n'], accuracy );
 
 end
