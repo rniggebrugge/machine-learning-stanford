@@ -11,11 +11,10 @@ function centroids = computeCentroids(X, idx, K)
 %
 
 % Useful variables
-[m n] = size(X);
 
 % You need to return the following variables correctly. 
-centroids = zeros(K, n);
-count = zeros(K,1);
+
+cmatrix = eye(K)(idx,:);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Go over every centroid and compute mean of all points that
@@ -26,19 +25,7 @@ count = zeros(K,1);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-for i=1:m
-	c = idx(i);
-	count(c)++;
-	centroids(c,:)+=X(i,:);
-end;
-
-for i=1:K
-	if count(i)>0
-		centroids(i,:)/=count(i);
-	end;
-end;
-
-
+centroids = cmatrix' * X ./ sum(cmatrix)';
 
 
 

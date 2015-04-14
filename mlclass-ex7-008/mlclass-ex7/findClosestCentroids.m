@@ -23,30 +23,25 @@ m = size(X,1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-function distance = calcDistance(a,b)
-	dim = length(a);
-	distance = 0;
-	for l=1:dim
-		distance = distance + (a(l)-b(l))^2;
-	end;
-end;
+% function distance = calcDistance(a,b)
+% 	dim = length(a);
+% 	distance = 0;
+% 	for l=1:dim
+% 		distance = distance + (a(l)-b(l))^2;
+% 	end;
+% end;
 
+temp = zeros(m,K);
 
-for i=1:m
-	point = X(i,:);
-	centroid = centroids(1,:);
-	mindistance = calcDistance(point,centroid);
-	idx(i)=1;
-	for j=2:K
-		centroid = centroids(j,:);
-		dist = calcDistance(point, centroid);
-		if dist<mindistance
-			mindistance = dist;
-			idx(i)=j;
-		end;
-	end;
-end;
+for i=1:K
+	centroid = centroids(i,:);
+	dt = bsxfun(@minus, X, centroid);
+	dt = dt.^2;
+	dt = sum(dt,2);
+	temp(:,i)=dt;
+end
 
+[dd idx] = min(temp,[],2);
 
 
 
