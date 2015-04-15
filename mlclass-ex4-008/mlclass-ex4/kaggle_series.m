@@ -13,15 +13,15 @@ function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, 
 	j_max = -10;
 
 	[trainDS testDS] = take_random_parts(m, 7000);
-	[X Y] = add_features(trainDS);
+	[X Y] = add_features_new(trainDS);
 	
 	Xmean = mean(X,1);
 	Xrange = range(X);
-	% X = (X.-Xmean)./Xrange;
+	X = (X.-Xmean)./Xrange;
 
 
-	[Xtest Ytest] = add_features(testDS);
-	% Xtest = (Xtest.-Xmean)./Xrange;
+	[Xtest Ytest] = add_features_new(testDS);
+	Xtest = (Xtest.-Xmean)./Xrange;
 
 	size(X)
 	size(Xtest)
