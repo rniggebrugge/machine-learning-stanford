@@ -14,39 +14,39 @@ function [Xreturn Y] = add_features(X)
 	%% my idea is that these probably have the highest predictive
 	%% power
 
-	% v = sum(X>0);
-	% [i ix] = sort(v, "descend");
+	v = sum(X>0);
+	[i ix] = sort(v, "descend");
 
 	%% power2-products (except quadratic)
 
 
-	% for i=1:9
-	% 	for j=(i+1):10
-	% 		X = [X X(:,ix(i)).*X(:,ix(j))];
-	% 		X = [X X(:,ix(i))./(1+X(:,ix(j)))];
-	% 	end
-	% end
+	for i=1:9
+		for j=(i+1):10
+			X = [X X(:,ix(i)).*X(:,ix(j))];
+			X = [X X(:,ix(i))./(1+X(:,ix(j)))];
+		end
+	end
 
 	%% power3-products
 
-	% for i=1:10
-	% 	for j=i:10
-	% 		for k=j:10	
-	% 			X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
-	% 		end
-	% 	end
-	% end
+	for i=1:10
+		for j=i:10
+			for k=j:10	
+				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
+			end
+		end
+	end
 
 	%% power4-products
 
-	% for i=1:4
-	% 	for j=i:4
-	% 		for k=j:4
-	% 			for l=k:4	
-	% 				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k)).*X(:,ix(l))];
-	% 		end
-	% 	end
-	% end
+	for i=1:4
+		for j=i:4
+			for k=j:4
+				for l=k:4	
+					X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k)).*X(:,ix(l))];
+			end
+		end
+	end
 
 	Xreturn = [X X2];
 
