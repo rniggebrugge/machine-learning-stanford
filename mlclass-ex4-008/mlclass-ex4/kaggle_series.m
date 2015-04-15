@@ -12,7 +12,7 @@ function [theta1_return theta2_return Xmax Xrange] = kaggle_series(iterations, m
 
 	j_max = 0;
 
-	[trainDS testDS] = take_random_parts(m, m);
+	[trainDS testDS] = take_random_parts(m, 7000);
 	[X Y] = add_features(trainDS);
 	
 	Xmean = mean(X,1);
