@@ -1,4 +1,4 @@
-function [theta1_return theta2_return Xmax Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector)
+function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector, th1, th2)
 
 
 	if ~exist('lambda_vector', 'var') || isempty(lambda_vector)
@@ -10,18 +10,18 @@ function [theta1_return theta2_return Xmax Xrange] = kaggle_series(iterations, m
 	end
 
 
-	j_max = 0;
+	j_max = -10;
 
 	[trainDS testDS] = take_random_parts(m, 7000);
 	[X Y] = add_features(trainDS);
 	
 	Xmean = mean(X,1);
 	Xrange = range(X);
-	X = (X.-Xmean)./Xrange;
+	% X = (X.-Xmean)./Xrange;
 
 
 	[Xtest Ytest] = add_features(testDS);
-	Xtest = (Xtest.-Xmean)./Xrange;
+	% Xtest = (Xtest.-Xmean)./Xrange;
 
 	size(X)
 	size(Xtest)
@@ -34,8 +34,15 @@ function [theta1_return theta2_return Xmax Xrange] = kaggle_series(iterations, m
 
 		hidden_layer_size = hl_vector(j);
 
-		initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
-		initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+
+		if ~exist('th1', 'var') || isempty(th1)
+			initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
+			initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+		else
+			initial_Theta1 = th1;
+			initial_Theta2 = th2;
+		end
+
 		initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 		options = optimset('MaxIter', iterations);
 
