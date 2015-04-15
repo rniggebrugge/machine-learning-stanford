@@ -1,4 +1,4 @@
-function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector, th1, th2)
+function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector, newfs, th1, th2)
 
 
 	if ~exist('lambda_vector', 'var') || isempty(lambda_vector)
@@ -13,14 +13,20 @@ function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, 
 	j_max = -10;
 
 	[trainDS testDS] = take_random_parts(m, 7000);
-	[X Y] = add_features_new(trainDS);
+
+	if newfs
+		[X Y] = add_features_new(trainDS);
+		[Xtest Ytest] = add_features_new(testDS);
+	else
+		[X Y] = add_features(trainDS);
+		[Xtest Ytest] = add_features(testDS);
+	end
 	
 	Xmean = mean(X,1);
 	Xrange = range(X);
 	X = (X.-Xmean)./Xrange;
 
 
-	[Xtest Ytest] = add_features_new(testDS);
 	Xtest = (Xtest.-Xmean)./Xrange;
 
 	size(X)
@@ -38,9 +44,11 @@ function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, 
 		if ~exist('th1', 'var') || isempty(th1)
 			initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 			initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+			fprintf('Random initialization thetas\n\n');
 		else
 			initial_Theta1 = th1;
 			initial_Theta2 = th2;
+			fprintf('Continuing with given thetas\n\n');
 		end
 
 		initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
