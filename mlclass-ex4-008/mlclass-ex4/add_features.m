@@ -7,7 +7,7 @@ function [Xreturn Y] = add_features(X)
 	[m n] = size(X);
 
 	%% squared values for all features
-	% X2 = X.^2;
+	X2 = X.^2;
 
 	%% get the number of non-zero values, and sort to be able
 	%% to create new features based on the most non-zero features.
@@ -48,7 +48,7 @@ function [Xreturn Y] = add_features(X)
 	% 	end
 	% end
 
-	% Xreturn = [X X2];
+	Xreturn = [X X2];
 
-	Xreturn = X;
+	% Xreturn = X;
 end
