@@ -27,7 +27,7 @@ function [X Y] = add_features_new(X_in)
 		avg_feature_vector = avg_features(idx,:);
 		dt = initX.-avg_feature_vector;
 		dt = (dt.^2).*(initX~=0);
-		dt = sqrt(sum(dt,2));
+		dt = exp(-sum(dt,2)/10);
 		X = [X dt];
 	end
 

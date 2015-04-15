@@ -30,8 +30,8 @@ function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, 
 		Xrange = xr;
 	end
 
-	X = (X.-Xmean)./Xrange;
-	Xtest = (Xtest.-Xmean)./Xrange;
+	% X = (X.-Xmean)./Xrange;
+	% Xtest = (Xtest.-Xmean)./Xrange;
 
 	size(X)
 	size(Xtest)
