@@ -4,6 +4,7 @@ function [X Y] = add_features_new(X_in)
 	Y = X(:,end);
 	X(:, end) = [];
 	initX = X;
+	X = log(X+1);
 
 	avg_features = csvread("non-zero-average-table.csv");
 	avg_features(:,1)=[];
