@@ -18,6 +18,7 @@ function logloss = multiclass_logloss(y, Theta1, Theta2, X)
 
 	p = log(p);
 
+	p
 
 	temp = p.*y;
 
