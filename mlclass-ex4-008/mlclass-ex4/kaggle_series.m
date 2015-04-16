@@ -1,4 +1,4 @@
-function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector, newfs, th1, th2, xm, xr)
+function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, m, lambda_vector, hl_vector, newfs, th1, th2)
 
 
 	if ~exist('lambda_vector', 'var') || isempty(lambda_vector)
@@ -15,23 +15,19 @@ function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, 
 	[trainDS testDS] = take_random_parts(m, 7000);
 
 	if newfs
-		[X Y Xmean Xrange] = add_features_new(trainDS);
-		[Xtest Ytest] = add_features_new(testDS, Xmean , Xrange);
+		[X Y] = add_features_new(trainDS);
+		[Xtest Ytest] = add_features_new(testDS);
 	else
 		[X Y] = add_features(trainDS);
 		[Xtest Ytest] = add_features(testDS);
 	end
 	
-	if ~exist('xm', 'var') || isempty(xm)
-		Xmean = mean(X,1);
-		Xrange = range(X);
-	else
-		Xmean = xm;
-		Xrange = xr;
-	end
+	Xmean = mean(X,1);
+	Xrange = range(X);
+	X = (X.-Xmean)./Xrange;
 
-	% X = (X.-Xmean)./Xrange;
-	% Xtest = (Xtest.-Xmean)./Xrange;
+
+	Xtest = (Xtest.-Xmean)./Xrange;
 
 	size(X)
 	size(Xtest)
