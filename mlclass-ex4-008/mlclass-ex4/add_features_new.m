@@ -25,7 +25,7 @@ function [X Y] = add_features_new(X_in)
 
 	for idx=1:9
 		avg_feature_vector = avg_features(idx,:);
-		dt = initX.-avg_feature_vector;
+		dt = bsxfun(@minus,initX, avg_feature_vector);
 		dt = (dt.^2).*(initX~=0);
 		dt = exp(-sum(dt,2)/10);
 		X = [X dt];
