@@ -1,7 +1,8 @@
 function [Xreturn Y] = add_features(X)
 
-	Y = X(:,end);	%% Y := class
-	X(:,end) = []; 	%% remove last colum (class)
+	Y=4;
+	% Y = X(:,end);	%% Y := class
+	% X(:,end) = []; 	%% remove last colum (class)
 	X = log(X+1); 	%% see how this works
 
 	[m n] = size(X);
@@ -51,4 +52,5 @@ function [Xreturn Y] = add_features(X)
 	Xreturn = [X X2];
 
 	% Xreturn = X;
+
 end
