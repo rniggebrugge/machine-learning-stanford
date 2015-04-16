@@ -15,8 +15,8 @@ function [theta1_return theta2_return Xmean Xrange] = kaggle_series(iterations, 
 	[trainDS testDS] = take_random_parts(m, 7000);
 
 	if newfs
-		[X Y] = add_features_new(trainDS);
-		[Xtest Ytest] = add_features_new(testDS);
+		[X Y Xmean Xrange] = add_features_new(trainDS);
+		[Xtest Ytest] = add_features_new(testDS, Xmean , Xrange);
 	else
 		[X Y] = add_features(trainDS);
 		[Xtest Ytest] = add_features(testDS);

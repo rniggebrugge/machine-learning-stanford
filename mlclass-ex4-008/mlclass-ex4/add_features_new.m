@@ -1,4 +1,4 @@
-function [X Y] = add_features_new(X_in)
+function [X Y Xmean Xrange] = add_features_new(X_in, xm, xr)
 
 	X = X_in;
 	Y = X(:,end);
@@ -6,15 +6,23 @@ function [X Y] = add_features_new(X_in)
 	initX = X;
 	X = log(X+1);
 
+	if ~exist('xm', 'var') || isempty(xm)	
+		Xmean = mean(X);
+		Xrange = range(X);
+	else
+		Xmean = xm;
+		Xrange = xr;
+	end
+
+	X = (X.-Xmean)./Xrange;
+
 	v = sum(X>0);
 	[i ix] = sort(v, "descend");
 
 	X2 = X.^2;
 
-	avg_features = csvread("non-zero-average-table.csv");
-	avg_features(:,1)=[];
-	avg_features(1,:)=[];
-	avg_features = avg_features';
+	avg_features = csvread("non_zero_means.csv");
+	var_features = csvread("non_zero_variations.csv");
 
 	% The method below takes the absolute distance for each feature with the
 	% expected (average) value for that feature for each class.
@@ -29,41 +37,47 @@ function [X Y] = add_features_new(X_in)
 	% expected (average) feature values. Taking into account only those features for
 	% which the record has non-zero value features.
 
+	distances = [];
 	for idx=1:9
 		avg_feature_vector = avg_features(idx,:);
+		var_feature_vector = var_features(idx,:);
+		var_feature_vector = max(var_feature_vector, 1e-14);
 		dt = bsxfun(@minus,initX, avg_feature_vector);
 		dt = (dt.^2).*(initX~=0);
-		dt = exp(-sum(dt,2)/10);
+		dt = bsxfun(@rdivide,dt,2*var_feature_vector);
+		dt = sum(dt,2);
+		dt = exp(-dt);
 		X = [X dt];
+		distances = [ distances dt];
 	end
 
-	for i=1:9
-		for j=(i+1):10
-			X = [X X(:,ix(i)).*X(:,ix(j))];
-			X = [X X(:,ix(i))./(1+X(:,ix(j)))];
-		end
-	end
+	% for i=1:9
+	% 	for j=(i+1):10
+	% 		X = [X X(:,ix(i)).*X(:,ix(j))];
+	% 		X = [X X(:,ix(i))./(1+X(:,ix(j)))];
+	% 	end
+	% end
 
-	%% power3-products
+	% %% power3-products
 
-	for i=1:10
-		for j=i:10
-			for k=j:10	
-				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
-			end
-		end
-	end
+	% for i=1:10
+	% 	for j=i:10
+	% 		for k=j:10	
+	% 			X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k))];
+	% 		end
+	% 	end
+	% end
 
-	%% power4-products
+	% %% power4-products
 
-	for i=1:4
-		for j=i:4
-			for k=j:4
-				for l=k:4	
-					X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k)).*X(:,ix(l))];
-			end
-		end
-	end
+	% for i=1:4
+	% 	for j=i:4
+	% 		for k=j:4
+	% 			for l=k:4	
+	% 				X = [X X(:,ix(i)).*X(:,ix(j)).*X(:,ix(k)).*X(:,ix(l))];
+	% 		end
+	% 	end
+	% end
 
 
 	X = [X X2];
