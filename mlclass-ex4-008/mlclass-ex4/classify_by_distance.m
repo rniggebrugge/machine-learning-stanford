@@ -8,6 +8,8 @@ function [prediction cl] = classify_by_distance(train, Ytrain, test, Ytest)
 	train = train./Xmax;
 	test = test./Xmax;
 
+	non_zero = sum(train~=0,2)/93;
+
 	for i=1:m
 		fprintf('%f', i);
 		vector = test(i,:);
@@ -20,8 +22,8 @@ function [prediction cl] = classify_by_distance(train, Ytrain, test, Ytest)
 		[distances idx] = sort(dt);
 		j=1;
 		while(j<100)
-			prediction(i,Ytrain(idx(j))) += 1/j ; %+ distances(1)/distances(j) ; 
-			prediction(i,Ytrain(idx(mtrain-j+1))) -= 1/j;
+			prediction(i,Ytrain(idx(j))) += (1/j * non_zero(idx(j))) ; %+ distances(1)/distances(j) ; 
+			% prediction(i,Ytrain(idx(mtrain-j+1))) -= 1/j;
 			j++;
 		end
 	end
